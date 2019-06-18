@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Отзывы о компаниях";
+}
+
+<h2>Отзывы о компаниях</h2>
+<br />
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Компания</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Оценка</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody id="reviewList">
+        @Html.Partial("_ReviewRow")
+    </tbody>
+    <tfoot id="reviewFooter">
+        <tr>
+            <td colspan="4" align="center" valign="middle">Загрузить больше данных</td>
+        </tr>
+    </tfoot>
+</table>
+
+
+@using (Html.BeginForm("AddItem", "Review", FormMethod.Get))
+{
+    <div class="form-group">
+        <input type="submit" class="btn btn-default" value="Добавить новый отзыв" />
+    </div>
+}
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            //загрузка порции данных отзывов
+            var page = 0;
+            var _inCallback = false;
+            function loadItems() {
+                if (page > -1 && !_inCallback) {
+                    _inCallback = true;
+                    page++;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Review/List/' + page,
+                        success: function (data, textstatus) {
+                            if (data != '') {
+                                $("#reviewList").append(data);
+                            }
+                            else {
+                                page = -1;
+                                $("#reviewFooter").hide();
+                            }
+                            _inCallback = false;
+                        }
+                    });
+                }
+            }
+
+            //слушатель кнопки добавить порцию
+            $("#reviewFooter")
+                .on('click', function () {
+                    loadItems();
+                });
+
+            //замена pointer и цвета при наведении
+            $("#reviewFooter").on("mouseover", function () {
+                $("#reviewFooter").css("background-color", "#e0e0e0");
+                $('#reviewFooter').css('cursor', 'pointer');
+
+            });
+
+            $("#reviewFooter").on("mouseout", function () {
+                $("#reviewFooter").css("background-color", "#fff");
+                $('#reviewFooter').css('cursor', 'auto');
+            });
+        })
+    </script>
+}

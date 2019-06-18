@@ -1,0 +1,62 @@
+﻿@model Domain.Entities.Review
+
+@{
+    ViewBag.Title = "Добавить отзыв";
+}
+
+<h2>Добавление отзыва о компании</h2>
+<br />
+
+@using (Html.BeginForm("AddItem", "Review", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary()
+    <h4>Автор отзыва:</h4>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Person, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">@Html.TextBoxFor(x => x.Person, new { @class = "form-control" })</div>
+    </div>
+    <hr />
+
+    <h4>Информация о компании:</h4>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Company, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">@Html.TextBoxFor(x => x.Company, new { @class = "form-control" })</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Address, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">@Html.TextBoxFor(x => x.Address, new { @class = "form-control" })</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.PositiveMoment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">@Html.TextAreaFor(x => x.PositiveMoment, new { @class = "form-control", @style = "height:175px" })</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.NegativeMoment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">@Html.TextAreaFor(x => x.NegativeMoment, new { @class = "form-control", @style = "height:175px" })</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Comment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 ">@Html.TextAreaFor(x => x.Comment, new { @class = "form-control", @style = "height:175px"})</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Mark, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(
+                expression: x => x.Mark,
+                selectList: Enumerable
+                    .Range(1, 5)
+                    .Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() })
+                    .ToArray(),
+                optionLabel: "---Выберите оценку---",
+                htmlAttributes: new { @class = "form-control" }
+            )
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Сохранить отзыв" />
+        </div>
+    </div>
+}
+

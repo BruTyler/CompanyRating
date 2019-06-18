@@ -1,0 +1,93 @@
+﻿@model CompanyRating.Models.ReviewsListViewModel
+
+@{
+    ViewBag.Title = "Панель администратора";
+}
+
+<h2>Панель администратора</h2>
+<br />
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Компания</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Оценка</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var singleReview in Model.Reviews)
+        {
+        <tr>
+            <td>@singleReview.ReviewID</td>
+            <td>@singleReview.Company</td>
+            <td>@singleReview.Address</td>
+            <td>@singleReview.Mark</td>
+            <td align="right">
+                @using (Html.BeginForm("Detail", "Review", FormMethod.Get))
+                {
+                    @Html.Hidden("ReviewId", singleReview.ReviewID)
+                    @Html.Hidden("ReturnUrl", @Request.Path)
+                    <input class="btn btn-default" type="submit" value="Детали" />
+                }
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#promptDelReviewModal" data-content="@singleReview.ReviewID">Удалить</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>
+
+
+<div class="modal fade" id="promptDelReviewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title">Подтверждение удаления</h4>
+            </div>
+            <div class="modal-body">
+                Уверены в удалении отзыва № <span id="ReviewContent"></span>?
+            </div>
+            <div class="modal-footer">
+                <table>
+                    <tr>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Admin", FormMethod.Get))
+                            {
+                                @Html.Hidden("ReviewId")
+                                <input class="btn btn-primary" type="submit" value="Удалить" />
+                            }
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        // при открытии модального окна
+        $('#promptDelReviewModal').on('show.bs.modal', function (event) {
+            // получить кнопку, которая его открыло
+            var button = $(event.relatedTarget)
+            // извлечь информацию из атрибута data-content
+            var content = button.data('content')
+            // вывести эту информацию в элементы
+            $(this).find('#ReviewId').val(content);
+            $(this).find('#ReviewContent').text(content);
+        })
+    </script>
+}

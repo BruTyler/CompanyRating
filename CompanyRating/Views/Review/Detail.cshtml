@@ -1,0 +1,57 @@
+﻿@model CompanyRating.Models.ReviewDetail
+
+@{
+    ViewBag.Title = "Подробности отзыва";
+}
+
+<br /><br />
+<a href="@Model.ReturnUrl" class="btn btn-default">&#9668; Вернуться к списку отзывов</a>
+<br />
+
+<h2>Подробности отзыва</h2>
+<hr />
+
+<div class="form-horizontal">
+
+    <h4>Автор отзыва</h4>
+    <div class="form-group ">
+        @Html.LabelFor(x => x.Review.Person, new { @class = "col-md-2  control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.Person)</div>
+    </div>
+    <br />
+
+    <h4>Информация о компании</h4>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.Company, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.Company)</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.Address, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.Address)</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.PositiveMoment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.PositiveMoment)</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.NegativeMoment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.NegativeMoment)</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.Comment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.Comment)</div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Review.Mark, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 field-content">@Html.DisplayFor(x => x.Review.Mark)</div>
+    </div>
+    <br />
+</div>
+
+
+
+
+
+
+
+

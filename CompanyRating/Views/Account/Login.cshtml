@@ -1,0 +1,20 @@
+﻿@model CompanyRating.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Авторизация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Авторизация</h2>
+
+<p>Пожалуйста выполните вход, чтобы получить доступ к панели администратора:</p>
+<div class="form-group">
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.EditorForModel()
+    <br />
+    <p><input type="submit" class="btn btn-default" value="Вход" /></p>
+}
+</div>
+

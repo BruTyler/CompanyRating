@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Domain.Entities.Review>
+
+@foreach (var singleReview in Model)
+{
+    <tr>
+        <td>@singleReview.Company</td>
+        <td>@singleReview.Address</td>
+        <td>@singleReview.Mark</td>
+        <td>
+            @using (Html.BeginForm("Detail", "Review", FormMethod.Get))
+            {
+                @Html.Hidden("ReviewId", singleReview.ReviewID)
+                @Html.Hidden("ReturnUrl", @Request.Path)
+                <input class="btn btn-default" type="submit" value="Детали" />
+            }
+        </td>
+    </tr>
+}
